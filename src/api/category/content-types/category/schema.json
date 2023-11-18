@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categories",
+  "info": {
+    "singularName": "category",
+    "pluralName": "categories",
+    "displayName": "category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "viewCount": {
+      "type": "biginteger",
+      "default": "0",
+      "min": "0",
+      "private": true
+    },
+    "news": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::news.news",
+      "inversedBy": "categories"
+    },
+    "isFirstToShow": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

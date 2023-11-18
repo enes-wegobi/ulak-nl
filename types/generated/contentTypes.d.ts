@@ -677,6 +677,137 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    image: Attribute.Media & Attribute.Required;
+    viewCount: Attribute.BigInteger &
+      Attribute.Private &
+      Attribute.SetMinMax<{
+        min: '0';
+      }> &
+      Attribute.DefaultTo<'0'>;
+    news: Attribute.Relation<
+      'api::category.category',
+      'manyToMany',
+      'api::news.news'
+    >;
+    isFirstToShow: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGeneralContactFormGeneralContactForm
+  extends Schema.CollectionType {
+  collectionName: 'general_contact_forms';
+  info: {
+    singularName: 'general-contact-form';
+    pluralName: 'general-contact-forms';
+    displayName: 'general-contact-form';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    surname: Attribute.String;
+    email: Attribute.Email & Attribute.Required;
+    subject: Attribute.String & Attribute.Required;
+    message: Attribute.Text & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::general-contact-form.general-contact-form',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::general-contact-form.general-contact-form',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNewsNews extends Schema.CollectionType {
+  collectionName: 'newses';
+  info: {
+    singularName: 'news';
+    pluralName: 'newses';
+    displayName: 'news';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    image: Attribute.Media & Attribute.Required;
+    isHomeFeatured: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    viewCount: Attribute.BigInteger &
+      Attribute.Private &
+      Attribute.SetMinMax<{
+        min: '0';
+      }> &
+      Attribute.DefaultTo<'0'>;
+    resource: Attribute.String;
+    isCategoryFeatured: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    categories: Attribute.Relation<
+      'api::news.news',
+      'manyToMany',
+      'api::category.category'
+    >;
+    content: Attribute.RichText &
+      Attribute.Required &
+      Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbar';
+        }
+      >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::news.news', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::news.news', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -693,6 +824,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::category.category': ApiCategoryCategory;
+      'api::general-contact-form.general-contact-form': ApiGeneralContactFormGeneralContactForm;
+      'api::news.news': ApiNewsNews;
     }
   }
 }
