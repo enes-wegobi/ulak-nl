@@ -45,12 +45,6 @@
       "default": false,
       "required": true
     },
-    "categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::category.category",
-      "mappedBy": "news"
-    },
     "content": {
       "type": "customField",
       "options": {
@@ -58,6 +52,12 @@
       },
       "required": true,
       "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "mappedBy": "newses"
     }
   }
 }

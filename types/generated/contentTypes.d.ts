@@ -683,6 +683,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     singularName: 'category';
     pluralName: 'categories';
     displayName: 'category';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -696,7 +697,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
         min: '0';
       }> &
       Attribute.DefaultTo<'0'>;
-    news: Attribute.Relation<
+    newses: Attribute.Relation<
       'api::category.category',
       'manyToMany',
       'api::news.news'
@@ -785,11 +786,6 @@ export interface ApiNewsNews extends Schema.CollectionType {
     isCategoryFeatured: Attribute.Boolean &
       Attribute.Required &
       Attribute.DefaultTo<false>;
-    categories: Attribute.Relation<
-      'api::news.news',
-      'manyToMany',
-      'api::category.category'
-    >;
     content: Attribute.RichText &
       Attribute.Required &
       Attribute.CustomField<
@@ -798,6 +794,11 @@ export interface ApiNewsNews extends Schema.CollectionType {
           preset: 'toolbar';
         }
       >;
+    categories: Attribute.Relation<
+      'api::news.news',
+      'manyToMany',
+      'api::category.category'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

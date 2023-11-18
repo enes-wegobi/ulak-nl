@@ -4,7 +4,8 @@
   "info": {
     "singularName": "category",
     "pluralName": "categories",
-    "displayName": "category"
+    "displayName": "category",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -17,12 +18,12 @@
       "unique": true
     },
     "image": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "viewCount": {
       "type": "biginteger",
@@ -30,7 +31,7 @@
       "min": "0",
       "private": true
     },
-    "news": {
+    "newses": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::news.news",
